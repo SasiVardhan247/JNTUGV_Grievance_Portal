@@ -7,9 +7,15 @@
     "start": "node index.js",
     "dev": "nodemon index.js"
   },
-  "author": "20VV1A0505,21VV1A0527",
+  "author": "Sasi_Vardhan_A",
   "license": "ISC",
   "devDependencies": {
     "nodemon": "^3.0.1"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "ejs": "^3.1.9",
+    "express": "^4.18.2",
+    "mongoose": "^7.6.3"
   }
 }

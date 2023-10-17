@@ -4,6 +4,6 @@ const router = express.Router();
 
 router.post('/applyGrievance',applyGrievance)
 router.put('/updateGrievance',updateGrievance)
-router.get('/getGrievances',getGrievance)
+router.get('/getGrievance',getGrievance)
 
 module.exports = router;

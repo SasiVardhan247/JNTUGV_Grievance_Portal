@@ -3,9 +3,6 @@ const { Schema, model } = require("mongoose");
 
 const grievanceModel = new Schema(
     {
-        _id : {
-            type: mongoose.Schema.Types.UUID
-        },
         grievancePostingTime : {
             type: Date,
             default: Date.now,

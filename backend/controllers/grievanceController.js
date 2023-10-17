@@ -10,6 +10,7 @@ exports.getGrievance = async(req,res) =>{
 };
 exports.applyGrievance = async(req,res) =>{
     try{
+        console.log(req.body)
         await Grievance.create({...req.body})
         res.status(200).json({status:true,msg:"Grievance added successfully"})
     } catch (err) {
@@ -20,7 +21,8 @@ exports.applyGrievance = async(req,res) =>{
 exports.updateGrievance = async(req,res) =>{
     try{
         const {id} = req.query
-        await Grievance.findByIdAndUpdate({_id:id},{...req.body,grievanceResponseTime:Date.now},{new: true })
+        const currentTime = Date.now();
+        await Grievance.findByIdAndUpdate({_id:id},{...req.body,grievanceResponseTime:currentTime},{new: true })
         res.status(200).json({status:true,msg:"Grievance Updated successfully"})
     }catch(err){
         console.error(err);

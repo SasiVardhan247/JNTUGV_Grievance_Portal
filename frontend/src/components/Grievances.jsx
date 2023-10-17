@@ -1,8 +1,14 @@
 import React from 'react'
+import grievances from '../data/grievances'
+import GCard from './GCard'
 
-const Grievances = (props) => {
+
+const Grievances = () => {
   return (
-    <div>No Grievances up until now</div>
+    <div>
+        <div className=''><p className='fw-bold'>Grivances</p></div>
+        {grievances.length == 0 ?  "No grivances up until now" : grievances.map((g) => <GCard  {...g} />)}
+    </div>
   )
 }
 

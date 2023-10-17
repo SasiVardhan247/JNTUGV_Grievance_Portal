@@ -1,79 +1,38 @@
 import React from "react";
-
+import Logo from "./Logo";
 const Header = () => {
   return (
     <div>
-      <header id="header" className="fixed-top">
-        <div className="container d-flex align-items-center justify-content-between">
-          <h1 className="logo">
-            <a href="https://jntugv.edu.in">
-              <img src="https://dhondi.ai/logos/jntugv.png" alt="logo" />
-            </a>
-          </h1>
-
-          <nav id="navbar" className="navbar">
-            <ul>
-              <li>
-                <a className="active" href="index.html">
-                  Home
-                </a>
-              </li>
-              <li>
-                <a href="our-story.html">Our Story</a>
-              </li>
-              <li>
-                <a href="events.html">Events</a>
-              </li>
-              <li>
-                <a href="gallery.html">Gallery</a>
-              </li>
-              <li className="dropdown">
-                <a href="#">
-                  <span>Drop Down</span> <i className="bi bi-chevron-down"></i>
-                </a>
-                <ul>
-                  <li>
-                    <a href="#">Drop Down 1</a>
+      <header id="header">
+        <Logo />
+        <div className="container d-flex align-items-center justify-content-center">
+          <nav className="navbar navbar-expand-lg">
+            <div className="container-fluid">
+              <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span className="navbar-toggler-icon"></span>
+              </button>
+              <div className="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul className="navbar-nav mb-2 mb-lg-0 gap-5">
+                  <li className="nav-item">
+                    <a className="nav-link active" aria-current="page" href="#">Home</a>
                   </li>
-                  <li className="dropdown">
-                    <a href="#">
-                      <span>Deep Drop Down</span>{" "}
-                      <i className="bi bi-chevron-right"></i>
+                  <li className="nav-item">
+                    <a className="nav-link" aria-current="page" href="#">About</a>
+                  </li>
+                  <li className="nav-item">
+                    <a className="nav-link" href="#">Contact Us</a>
+                  </li>
+                  <li className="nav-item dropdown">
+                    <a className="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                      Login
                     </a>
-                    <ul>
-                      <li>
-                        <a href="#">Deep Drop Down 1</a>
-                      </li>
-                      <li>
-                        <a href="#">Deep Drop Down 2</a>
-                      </li>
-                      <li>
-                        <a href="#">Deep Drop Down 3</a>
-                      </li>
-                      <li>
-                        <a href="#">Deep Drop Down 4</a>
-                      </li>
-                      <li>
-                        <a href="#">Deep Drop Down 5</a>
-                      </li>
+                    <ul className="dropdown-menu">
+                      <li><a className="dropdown-item" href="#">Registrar</a></li>
                     </ul>
                   </li>
-                  <li>
-                    <a href="#">Drop Down 2</a>
-                  </li>
-                  <li>
-                    <a href="#">Drop Down 3</a>
-                  </li>
-                  <li>
-                    <a href="#">Drop Down 4</a>
-                  </li>
                 </ul>
-              </li>
-              <li>
-                <a href="contact.html">Contact</a>
-              </li>
-            </ul>
-            <i className="bi bi-list mobile-nav-toggle"></i>
+              </div>
+            </div>
           </nav>
         </div>
       </header>

@@ -6,7 +6,6 @@ const grievanceModel = new Schema(
         memberId :{
             type : String,
             required:true,
-            unique: true,
         },
         acknoledgementId:{
             type:String,
@@ -19,17 +18,14 @@ const grievanceModel = new Schema(
         email :{
             type: String,
             require:true,
-            unique: true,
         },
         phoneNumber: {
             type: String,
             required: true,
-            unique: true,
         },
         aadharNumber : {
             type: String,
             required: true,
-            unique: true,
         },
         grievanceCategory : {
             type : String,

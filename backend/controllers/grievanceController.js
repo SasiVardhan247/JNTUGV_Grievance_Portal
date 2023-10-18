@@ -33,9 +33,10 @@ exports.applyGrievance = async(req,res) =>{
             const countString = pad(incrementedCount, 5);
             return countString;
         };
-        const {email} = req.body
+        const {email} = req.body.params
+        console.log(req.body);
         const formattedCount = await getCountWithLeadingZeros();
-        await Grievance.create({...req.body,acknoledgementId:`SGRNO${formattedCount}`,status:'pending'})
+        await Grievance.create({...req.body.params,acknoledgementId:`SGRNO${formattedCount}`,status:'pending', grievanceResponseTime : null , grievanceReply : null})
         // const mailOptions = {
         //     from: process.env.AUTH_EMAIL,
         //     to: email,
@@ -50,7 +51,8 @@ exports.applyGrievance = async(req,res) =>{
         // });
         res.status(200).json({status:true,msg:"Grievance added successfully"})
     } catch (err) {
-        return res.status(500).json({ status: false, msg: "Internal Server Error" });
+        console.log(err)
+        return res.status(200).json({ status: false, msg: "Internal Server Error" });
     }
 };
 
@@ -67,10 +69,10 @@ exports.updateGrievance = async(req,res) =>{
 
 exports.checkStatus = async(req,res) =>{
     try{
-        const {acknoledgementId} = req.body
-        const {status} = await Grievance.findOne({acknoledgementId}).exec();
-        res.status(200).json({status:true,msg:"status sent",status})
+        const {acknoledgementId} = req.body.params
+        const grievance = await Grievance.findOne({acknoledgementId}).exec();
+        res.status(200).json({search_status:true,msg:"status sent",grievance})
     }catch(err){
-        return res.status(500).json({ status: false, msg: "Internal Server Error" });
+        return res.status(200).json({ search_status: false, msg: "Internal Server Error" });
     }
 }

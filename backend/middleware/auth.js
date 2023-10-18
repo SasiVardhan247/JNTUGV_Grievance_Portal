@@ -2,8 +2,8 @@ const jwt = require("jsonwebtoken");
 const Admin = require("../models/adminModel");
 
 exports.verifyToken = async(req, res, next) => {
-    // const token = req.header("Authorization");
-    const token = req.header("Authorization").split(' ')[1];
+    const token = req.header("Authorization");
+    // const token = req.header("Authorization").split(' ')[1];
     if (!token) return res.status(400).json({ status: false, msg: "Token not found" });
     let admin;
     try {

@@ -4,6 +4,7 @@ import Status from '../components/Status'
 import axios from 'axios'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Footer from '../components/Footer';
 
 
 
@@ -108,8 +109,9 @@ const CheckStatus = () => {
                 </form>
             </div>
             {
-                !(responseData == null) && <Status status={responseData.status} ackno={responseData.acknoledgementId} grievance={responseData.grievance} remarks={responseData.grievanceReply == null ? "--" : responseData.grievanceReply} />
+                !(responseData == null) && <Status status={responseData.status} ackno={responseData.acknoledgementId} grievance={responseData.title} remarks={responseData.grievanceReply == null ? "--" : responseData.grievanceReply} />
             }
+            <Footer />
         </div>
     )
 }

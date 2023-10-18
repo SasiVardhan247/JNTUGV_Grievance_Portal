@@ -4,6 +4,7 @@ import Header from '../components/Header'
 import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Footer from '../components/Footer';
 
 
 
@@ -43,19 +44,25 @@ const GrievanceForm = () => {
         const response = await axios.post(`${process.env.REACT_APP_API_URL}/api/grievance/applyGrievance`, { params });
         setLoading(false);
         if (response.data.status) {
-            toast.success("Grieviance Successfully submitted!", {
+            toast.success(`Grieviance Successfully submitted! Your Acknowledgment No is ${response.data.acknoledgementId}. Please take a note of it or take a screen shot`, {
                 position: "top-right",
-                autoClose: 5000,
+                autoClose: 60000,
                 hideProgressBar: false,
-                closeOnClick: true,
+                closeOnClick: false,
                 pauseOnHover: false,
                 draggable: false,
                 progress: 0,
                 theme: "colored",
             });
-            setTimeout(() => {
-                navigate("/")
-            }, 2000);
+            setMid("");
+            setFN("");
+            setEmail("");
+            setPN("");
+            setAN("");
+            setGrivance("");
+            setTitle("");
+            setSD("");
+            setGC("1");
         }
         else {
             toast.error("Server error! Try again after some time", {
@@ -76,11 +83,11 @@ const GrievanceForm = () => {
                 <ToastContainer />
             </div>
             <Header />
-            <div className='text-center mt-5'>
+            <div className={`text-center mt-5`}>
                 <p className='fs-3 fw-bold'>Grievance Form</p>
                 <p className='required'>Fill all the fields with * mark</p>
             </div>
-            <div className='container mt-2 col-lg-6 col-sm-12 '>
+            <div className={`container mt-2 col-lg-6 col-sm-12`}>
                 <form>
                     <div className="input-group mb-3">
                         <span className="input-group-text" id="basic-addon1"><span className='required'>*</span>Faculty Id</span>
@@ -153,6 +160,7 @@ const GrievanceForm = () => {
                     </div>
                 </form>
             </div>
+            <Footer />
         </div>
     )
 }

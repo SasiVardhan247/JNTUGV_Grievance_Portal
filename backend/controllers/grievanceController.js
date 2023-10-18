@@ -49,7 +49,7 @@ exports.applyGrievance = async(req,res) =>{
         //       console.log(info.messageId);
         //     }
         // });
-        res.status(200).json({status:true,msg:"Grievance added successfully"})
+        res.status(200).json({status:true,msg:"Grievance added successfully",acknoledgementId: `SGRNO${formattedCount}`})
     } catch (err) {
         console.log(err)
         return res.status(200).json({ status: false, msg: "Internal Server Error" });

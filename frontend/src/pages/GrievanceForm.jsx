@@ -12,11 +12,15 @@ const GrievanceForm = () => {
             <div className='container mt-2 col-lg-6 col-sm-12 '>
                 <form action="" >
                     <div className="input-group mb-3">
-                        <span className="input-group-text" id="basic-addon1"><span className='required'>*</span> Member Id </span>
+                        <span className="input-group-text" id="basic-addon1"><span className='required'>*</span>Faculty Id</span>
                         <input type="text" className="form-control" placeholder="" aria-label="Username" aria-describedby="basic-addon1" required={true} />
                     </div>
                     <div className="input-group mb-3">
-                        <span className="input-group-text" id="basic-addon1"><span className='required'>*</span>Name </span>
+                        <span className="input-group-text" id="basic-addon1"><span className='required'>*</span>Title</span>
+                        <input type="text" className="form-control" placeholder="" aria-label="Username" aria-describedby="basic-addon1" required={true} />
+                    </div>
+                    <div className="input-group mb-3">
+                        <span className="input-group-text" id="basic-addon1"><span className='required'>*</span>Full Name</span>
                         <input type="text" className="form-control" placeholder="" aria-label="Username" aria-describedby="basic-addon1" required={true} />
                     </div>
                     <div className="input-group mb-3">

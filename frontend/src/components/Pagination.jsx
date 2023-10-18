@@ -1,6 +1,5 @@
 import React from 'react'
 import ReactPaginate from 'react-paginate';
-import grievances from '../data/grievances'
 import GCard from './GCard'
 import { useState } from 'react';
 
@@ -8,13 +7,12 @@ import { useState } from 'react';
 const Grievances = ({ currentItems }) => {
     return (
         <div className='container mt-5'>
-            <div className='text-center'><p className='fw-bold'>Grievances</p></div>
             {currentItems.length == 0 ? "No grivances up until now" : currentItems.map((g,index) => <GCard  i={index}  {...g} />)}
         </div>
     )
 }
 
-const Pagination = ({ itemsPerPage }) => {
+const Pagination = ({ itemsPerPage , grievances }) => {
     // Here we use item offsets; we could also use page offsets
     // following the API or data you're working with.
     const [itemOffset, setItemOffset] = useState(0);

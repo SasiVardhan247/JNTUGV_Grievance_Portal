@@ -2,6 +2,8 @@ import React from 'react'
 import Header from '../components/Header'
 import Pagination from '../components/Pagination'
 import { useNavigate } from 'react-router-dom'
+import grievances from '../data/grievances'
+import Grievances from '../components/Grievances'
 
 const Home = () => {
     const navigate = useNavigate();
@@ -25,7 +27,7 @@ const Home = () => {
                     </small>
                 </div>
             </div>
-            <Pagination itemsPerPage={5} />
+            <Grievances />
         </div>
     )
 }

@@ -1,6 +1,10 @@
 :root {
     --bg-color: rgb(248, 249, 250);
     --active-color: #6D3DA9;
+    --bg-yellow-border : #FFE69C;
+    --bg-yellow : #FFF3CD;
+    --bg-blue-border : #004D79;
+    --bg-blue : #005B90;
 }
 
 @import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
@@ -25,6 +29,22 @@ code {
 }
 
 
-.border-left {
-    border-left: 3px solid rgb(157, 157, 157);
+.border-left-yellow {
+    border-left: 4px solid var(--bg-yellow-border);
+}
+
+.bg-yellow { 
+    background-color: var(--bg-yellow);
+}
+
+.border-left-blue {
+    border-left: 3px solid var(--);
+}
+
+.border-left-green {
+    border-left: 4px solid #9ee6c5;
+}
+
+.bg-green {
+    background-color: #D1E7DD;
 }

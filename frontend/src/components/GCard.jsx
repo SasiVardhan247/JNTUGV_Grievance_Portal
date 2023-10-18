@@ -9,23 +9,8 @@ const GCard = (props) => {
             </div>
             <div className='row container'>
                 <div className='col-lg-6 col-sm-12 text-sm-start'> <small className='text-black  text-opacity-50'>Posted on {props.grievancePostingTime}</small> </div>
-                <div className='col-lg-6 col-sm-12 text-lg-end text-sm-start'><small className='text-black  text-opacity-50'>{props.grievanceResponseTime && "Replied on " + props.grievanceResponseTime} </small> </div>
+                {/* <div className='col-lg-6 col-sm-12 text-lg-end text-sm-start'><small className='text-black  text-opacity-50'>{props.grievanceResponseTime && "Replied on " + props.grievanceResponseTime} </small> </div> */}
             </div>
-            {!props.grievanceReply ? <div className='container'><small>Not yet replied</small></div> :
-                <div className="accordion" id={props._id}>
-                    <div className="accordion-item">
-                        <h2 className="accordion-header">
-                            <button className="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target={"#i" + props.i} aria-expanded="true" aria-controls={"i" + props.i}>
-                                Comment
-                            </button>
-                        </h2>
-                        <div id={"i" + props.i} className="accordion-collapse collapse show" data-bs-parent={"#i" + props.i}>
-                            <div className="accordion-body">
-                                {props.grievanceReply}
-                            </div>
-                        </div>
-                    </div>
-                </div>}
         </div>
     )
 }

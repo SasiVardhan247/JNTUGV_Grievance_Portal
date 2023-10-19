@@ -1,8 +1,17 @@
 import React from "react";
 import Logo from "./Logo";
+import { useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 const Header = () => {
+  const r_token = localStorage.getItem("r_token");
+  const navigate = useNavigate();
   return (
     <div>
+      <div className='fixed-top'>
+        <ToastContainer />
+      </div>
       <header id="header">
         <Logo />
         <div className="container d-flex align-items-center justify-content-center">
@@ -16,29 +25,58 @@ const Header = () => {
                   <li className="nav-item">
                     <a className="nav-link" aria-current="page" href="/">Home</a>
                   </li>
-                  <li className="nav-item">
-                    <a className="nav-link" aria-current="page" href="#">About</a>
-                  </li>
-                  <li className="nav-item dropdown">
-                    <a className="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                      Login
-                    </a>
-                    <ul className="dropdown-menu">
-                      <li><a className="dropdown-item" href="/login">Registrar</a></li>
-                    </ul>
-                  </li>
-                  <li className="nav-item dropdown">
-                    <a className="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                      Services
-                    </a>
-                    <ul className="dropdown-menu">
-                      <li><a className="dropdown-item" href="/grievanceForm">Apply for Grievance</a></li>
-                      <li><a className="dropdown-item" href="/checkstatus">Check status</a></li>
-                    </ul>
-                  </li>
-                  <li className="nav-item">
-                    <a className="nav-link" href="#">Contact Us</a>
-                  </li>
+                  {
+                    !r_token && <li className="nav-item">
+                      <a className="nav-link" aria-current="page" href="#">About</a>
+                    </li>
+                  }
+                  {
+                    !r_token && <li className="nav-item dropdown">
+                      <a className="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Login
+                      </a>
+                      <ul className="dropdown-menu">
+                        <li><a className="dropdown-item" href="/login">Registrar</a></li>
+                      </ul>
+                    </li>
+                  }
+                  {
+                    !r_token && <li className="nav-item dropdown">
+                      <a className="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Services
+                      </a>
+                      <ul className="dropdown-menu">
+                        <li><a className="dropdown-item" href="/grievanceForm">Apply for Grievance</a></li>
+                        <li><a className="dropdown-item" href="/checkstatus">Check status</a></li>
+                      </ul>
+                    </li>
+                  }
+                  {
+                    !r_token && <li className="nav-item">
+                      <a className="nav-link" href="#contact">Contact Us</a>
+                    </li>
+                  }
+                  {
+                    r_token && <li className="nav-item">
+                      <a className="nav-link" href="#" onClick={(e) => {
+                        e.preventDefault();
+                        localStorage.removeItem("r_token");
+                        toast.info(`Logging out`, {
+                          position: "top-right",
+                          autoClose: 1000,
+                          hideProgressBar: false,
+                          closeOnClick: false,
+                          pauseOnHover: false,
+                          draggable: false,
+                          progress: 0,
+                          theme: "colored",
+                        });
+                        setTimeout(() => {
+                          navigate("/");
+                        }, 1500)
+                      }}>Logout</a>
+                    </li>
+                  }
                 </ul>
               </div>
             </div>

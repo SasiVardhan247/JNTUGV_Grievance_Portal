@@ -59,12 +59,13 @@ exports.applyGrievance = async(req,res) =>{
 
 exports.updateGrievance = async(req,res) =>{
     try{
-        const {id} = req.query
+        const id = req.header('id');
         const currentTime = Date.now();
-        await Grievance.findByIdAndUpdate({_id:id},{...req.body,grievanceResponseTime:currentTime,status:'success'},{new: true })
+        console.log("hitted")
+        await Grievance.findByIdAndUpdate(id,{...req.query,grievanceResponseTime:currentTime}).catch((err) => console.log(err))
         res.status(200).json({status:true,msg:"Grievance Updated successfully"})
     }catch(err){
-        return res.status(500).json({ status: false, msg: "Internal Server Error" });
+        return res.status(200).json({ status: false, msg: "Internal Server Error" });
     }
 };
 
@@ -75,5 +76,25 @@ exports.checkStatus = async(req,res) =>{
         res.status(200).json({search_status:true,msg:"status sent",grievance})
     }catch(err){
         return res.status(200).json({ search_status: false, msg: "Internal Server Error" });
+    }
+}
+
+
+
+exports.fetchGrievance = async (req,res) => {
+    try {
+        const {id} = req.headers;
+        const grievance = await Grievance.findOne({ _id : id }).exec();
+        return res.status(200).json({
+            status : true,
+            grievance : grievance,
+            msg : "fetched grievance successfully"
+        })
+    }
+    catch(err) {
+        return res.status(200).json({
+            status : false,
+            msg : "Not found"
+        })
     }
 }

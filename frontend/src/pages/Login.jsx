@@ -22,14 +22,14 @@ const Login = () => {
     setLoading(true);
     const params = {
       password
-    }        
+    }
     const response = await axios.post(`${process.env.REACT_APP_API_URL}/api/auth/login`, { params });
     setLoading(false);
     localStorage.setItem("r_token",response.data.token)
     if (response.data.status) {
-      toast.success(`Welocme Home Registar !!!`, {
+      toast.success(`Welcome Home Registar !!!`, {
           position: "top-right",
-          autoClose: 60000,
+          autoClose: 1000,
           hideProgressBar: false,
           closeOnClick: false,
           pauseOnHover: false,
@@ -40,7 +40,7 @@ const Login = () => {
       setPassword("")
       setTimeout(() => {
         navigate('/')
-      }, 2000);
+      }, 1500);
   }
   else {
       toast.error("Server error! Try again after some time", {

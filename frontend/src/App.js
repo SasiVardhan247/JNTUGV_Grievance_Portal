@@ -15,7 +15,7 @@ function App() {
           <Route exact path="/grievanceForm" element={<GrievanceForm />}></Route>
           <Route exact path='/checkstatus' element={<CheckStatus />}></Route>
         </Routes>
-      </BrowserRouter>
+      </BrowserRouter> 
     </div>
   );
 }

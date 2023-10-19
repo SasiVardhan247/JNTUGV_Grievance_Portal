@@ -6,8 +6,6 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Footer from '../components/Footer';
 
-
-
 const GrievanceForm = () => {
     const [memberId, setMid] = useState("");
     const [fullName, setFN] = useState("");
@@ -21,13 +19,13 @@ const GrievanceForm = () => {
     const navigate = useNavigate();
     const [isLoading , setLoading] = useState(false);
 
-
     const checksum = function () {
-        if (memberId != "" && fullName != "" && email != "" && phoneNumber != "" && aadharNumber != "" && grievance != "" && title != "" && supportingDocs != "" && grievanceCategory != "") {
+        if (memberId !== "" && fullName !== "" && email !== "" && phoneNumber !== "" && aadharNumber !== "" && grievance !== "" && title !== "" && supportingDocs !== "" && grievanceCategory !== "") {
             return true
         }
         return false;
     }
+    
     const login = async () => {
         setLoading(true);
         const params = {
@@ -36,7 +34,7 @@ const GrievanceForm = () => {
             email,
             phoneNumber,
             aadharNumber,
-            grievance,
+            grievance, 
             title,
             supportingDocs,
             grievanceCategory
@@ -136,7 +134,7 @@ const GrievanceForm = () => {
                         <div className="form-text" id="basic-addon4">*Upload the file in Gdrive or any other cloud storage service and paste the file link here. Make sure to put the file access to public, Otherwise your grievance may get rejected</div>
                     </div>
                     <div className='text-center mb-5'>
-                        <button type="submit" class={`btn btn-primary ${isLoading || !checksum() && "disabled"}`} onClick={(e) => {
+                        <button type="submit" class={`btn btn-primary ${isLoading || (!checksum() && "disabled")}`} onClick={(e) => {
                             e.preventDefault()
                             if (checksum()) {
                                 login();

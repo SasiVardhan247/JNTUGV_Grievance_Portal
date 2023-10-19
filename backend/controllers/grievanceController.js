@@ -13,6 +13,7 @@ const nodemailer = require("nodemailer");
 exports.getGrievance = async(req,res) =>{
     try{
         const grievances = await Grievance.find({})
+        console.log(grievances)
         res.status(200).json({status:true,grievances,msg: 'grievances'})
     }catch(err){
         return res.status(500).json({ status: false, msg: "Internal Server Error" });

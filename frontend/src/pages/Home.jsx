@@ -8,6 +8,8 @@ import Footer from '../components/Footer'
 
 const Home = () => {
     const navigate = useNavigate();
+    const r_token= localStorage.getItem("r_token");
+    // localStorage.removeItem("r_token")
     return (
         <div className='bg-light'>
             <Header />
@@ -28,7 +30,7 @@ const Home = () => {
                     </small>
                 </div>
             </div>
-            <Grievances />
+            {r_token && <Grievances />}
             <Footer />
         </div>
     )

@@ -8,7 +8,7 @@ const GCard = (props) => {
         const day = date.getUTCDate();
         const month = date.getUTCMonth() + 1; // Months are zero-based
         const year = date.getUTCFullYear();
-        const hours = date.getUTCHours();
+        let hours = date.getUTCHours();
         const minutes = date.getUTCMinutes();
         const seconds = date.getUTCSeconds();
         const weekday = date.toLocaleDateString('en-US', { weekday: 'long' });

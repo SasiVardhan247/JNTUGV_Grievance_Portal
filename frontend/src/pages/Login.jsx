@@ -1,89 +1,188 @@
-import React, { useState } from 'react'
-import { useNavigate } from "react-router-dom"
-import Header from '../components/Header'
-import Footer from '../components/Footer'
-import axios from 'axios';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import Header from "../components/Header";
+import Footer from "../components/Footer";
+import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Login = () => {
-  const [password,setPassword] = useState("");
-  const [isLoading , setLoading] = useState(false);
+  const [password, setPassword] = useState("");
+  const [isLoading, setLoading] = useState(false);
+  const [otp, setOtp] = useState("");
   const navigate = useNavigate();
-
+  const [status, setStatus] = useState(false);
   const checksum = function () {
     if (password !== "") {
-        return true
+      return true;
     }
     return false;
-  }
+  };
 
-  const login = async()=>{
+  const handleChange = (e) => {
+    const { value, id } = e.target;
+    const nextInput = parseInt(id.substring(3)) + 1;
+    setOtp((prev) => {
+      return {
+        ...prev,
+        [id]: value,
+      };
+    });
+    const nextInputElement = document.querySelector(`#otp${nextInput}`);
+    if (nextInputElement && value.length === e.target.maxLength) {
+      nextInputElement.focus();
+    }
+  };
+
+  const login = async () => {
     setLoading(true);
     const params = {
-      password
+      password,
+    };
+    try {
+      const response = await axios.post(
+        `${process.env.REACT_APP_API_URL}/api/auth/login`,
+        { params }
+      );
+      setLoading(false);
+      localStorage.setItem("status", response.data.status);
+      setStatus(localStorage.getItem("status"));
+      toast.success(response.data.msg, {
+        position: "top-right",
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: false,
+        pauseOnHover: false,
+        draggable: false,
+        progress: 0,
+        theme: "colored",
+      });
+      // setPassword("")
+      // setTimeout(() => {
+      //   navigate("/login");
+      // }, 1500);
+    } catch (err) {
+      setLoading(false);
+      toast.error(err.response.data.msg, {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: false,
+        progress: 0,
+        theme: "colored",
+      });
+      localStorage.setItem("status", err.response.data.status);
+      setStatus(localStorage.getItem("status"));
+      setPassword("");
+      navigate("/login");
     }
-    const response = await axios.post(`${process.env.REACT_APP_API_URL}/api/auth/login`, { params });
-    setLoading(false);
-    localStorage.setItem("r_token",response.data.token)
-    if (response.data.status) {
-      toast.success(`Welcome Home Registar !!!`, {
-          position: "top-right",
-          autoClose: 1000,
-          hideProgressBar: false,
-          closeOnClick: false,
-          pauseOnHover: false,
-          draggable: false,
-          progress: 0,
-          theme: "colored",
+  };
+  
+  const handleotp = async () =>{
+    const finalOtp = Object.values(otp).join("");
+    const params = {
+      finalOtp,
+    };
+    try {
+      const response = await axios.post(
+        `${process.env.REACT_APP_API_URL}/api/auth/verify`,
+        { params }
+      );
+      // setLoading(false);
+      setStatus(false)
+      localStorage.setItem("r_token", response.data.token);
+      toast.success(response.data.msg, {
+        position: "top-right",
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: false,
+        pauseOnHover: false,
+        draggable: false,
+        progress: 0,
+        theme: "colored",
       });
-      setPassword("")
+      setOtp("")
       setTimeout(() => {
-        navigate('/')
+        navigate("/");
       }, 1500);
-  }
-  else {
-      toast.error("Server error! Try again after some time", {
-          position: "top-right",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: false,
-          draggable: false,
-          progress: 0,
-          theme: "colored",
+    } catch (err) {
+      // setLoading(false);
+      setStatus(false)
+      toast.error(err.response.data.msg, {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: false,
+        progress: 0,
+        theme: "colored",
       });
-  }
+      setOtp("");
+      setTimeout(() => {
+        navigate("/login");
+      }, 1500);
+    }
   }
 
   return (
     <div>
-      <div className='fixed-top'>
-          <ToastContainer />
+      <div className="fixed-top">
+        <ToastContainer />
       </div>
       <Header />
-      <div className='text-center mt-5'>
-        <p className='fs-3 fw-bold'>Registrar Login</p>
-        <p className='required'>Fill all the fields with * mark</p>
+      <div className="text-center mt-5">
+        <p className="fs-3 fw-bold">Registrar Login</p>
+        <p className="required">Fill all the fields with * mark</p>
       </div>
-      <div className='container mt-2 col-lg-4  col-sm-12 '>
-        <form action="" >
+      <div className="container mt-2 col-lg-4  col-sm-12 ">
+        <form action="">
           <div className="input-group mb-3">
-            <span className="input-group-text" id="basic-addon1">User</span>
-            <input type="text" className="form-control" placeholder="" value={"Registrar"} aria-label="Username" aria-describedby="basic-addon1" disabled />
+            <span className="input-group-text" id="basic-addon1">
+              User
+            </span>
+            <input
+              type="text"
+              className="form-control"
+              placeholder=""
+              value={"Registrar"}
+              aria-label="Username"
+              aria-describedby="basic-addon1"
+              disabled
+            />
           </div>
           <div className="input-group mb-3">
-            <span className="input-group-text" id="basic-addon1"><span className='required'>*</span>Password</span>
-            <input type="password" name="password"  value={password} className="form-control" placeholder="" aria-label="Username" aria-describedby="basic-addon1" required={true} onChange={(e)=>setPassword(e.target.value)}/>
+            <span className="input-group-text" id="basic-addon1">
+              <span className="required">*</span>Password
+            </span>
+            <input
+              type="password"
+              name="password"
+              value={password}
+              className={`form-control`}
+              placeholder=""
+              aria-label="Username"
+              aria-describedby="basic-addon1"
+              required={true}
+              onChange={(e) => setPassword(e.target.value)}
+              disabled={status}
+            />
           </div>
-          <div className='text-center mb-5'>
-            <button type="submit" class={`btn btn-primary ${isLoading || (!checksum() && "disabled")}`} onClick={(e) => {
-              e.preventDefault()
-              if (checksum()) {
-                  login();
-              }
-              else {
-                  toast.error("Please enter all fields", {
+          {!status && (
+            <div className="text-center mb-5">
+              <button
+                type="submit"
+                className={`btn btn-primary ${
+                  isLoading || (!checksum() && "disabled")
+                }`}
+                onClick={(e) => {
+                  e.preventDefault();
+                  if (checksum()) {
+                    login();
+                  } else {
+                    toast.error("Please enter all fields", {
                       position: "top-right",
                       autoClose: 5000,
                       hideProgressBar: false,
@@ -92,18 +191,121 @@ const Login = () => {
                       draggable: false,
                       progress: 0,
                       theme: "colored",
-                  });
-              }
-              }}>
-                { isLoading && <span class="spinner-border spinner-border-sm" aria-hidden="true"></span> }
-                { !isLoading && "Login" }
+                    });
+                  }
+                }}
+              >
+                {isLoading && (
+                  <span
+                    class="spinner-border spinner-border-sm"
+                    aria-hidden="true"
+                  ></span>
+                )}
+                {!isLoading && "Generate OTP"}
               </button>
-          </div>
+            </div>
+          )}
         </form>
+        {status && (
+          <form onSubmit={handleotp}>
+              <div className="container-fluid" style={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+              }}>
+              <small>
+                {" "}
+                <i className="fa-solid fa-check mx-1 text-success"></i>OTP sent
+                successfully!{" "}
+              </small>
+            </div>
+            <div className="container-fluid d-flex flex-row justify-content-center align-items-center mt-2">
+              <input
+                type="text"
+                maxLength="1"
+                id="otp1"
+                value={otp.otp1 || ""}
+                className="form-control input1 text-dark"
+                required
+                autoComplete="new"
+                autoFocus
+                onChange={handleChange}
+              />
+              <input
+                type="text"
+                maxLength="1"
+                id="otp2"
+                value={otp.otp2 || ""}
+                className="form-control input1 text-dark"
+                required
+                autoComplete="new"
+                onChange={handleChange}
+              />
+              <input
+                type="text"
+                maxLength="1"
+                id="otp3"
+                value={otp.otp3 || ""}
+                className="form-control input1 text-dark"
+                required
+                autoComplete="new"
+                onChange={handleChange}
+              />
+              <input
+                type="text"
+                maxLength="1"
+                id="otp4"
+                value={otp.otp4 || ""}
+                className="form-control input1 text-dark"
+                required
+                autoComplete="new"
+                onChange={handleChange}
+              />
+              <input
+                type="text"
+                maxLength="1"
+                id="otp5"
+                value={otp.otp5 || ""}
+                className="form-control input1 text-dark"
+                required
+                autoComplete="new"
+                onChange={handleChange}
+              />
+              <input
+                type="text"
+                maxLength="1"
+                id="otp6"
+                value={otp.otp6 || ""}
+                className="form-control input1 text-dark"
+                required
+                autoComplete="new"
+                onChange={handleChange}
+              />
+            </div>
+           
+            <div
+              className="container-fluid my-4"
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <button className="btn btn-primary">Verify OTP</button>
+            </div>
+
+            <div className="container-fluid my-4 text-center">
+              <p className="fs-6">Didn't receive any OTP?</p>
+              <button className="btn btn-primary" onClick={login}>
+                Resend
+              </button>
+            </div>
+          </form>
+        )}
       </div>
       <Footer />
     </div>
-  )
-}
+  );
+};
 
-export default Login
+export default Login;

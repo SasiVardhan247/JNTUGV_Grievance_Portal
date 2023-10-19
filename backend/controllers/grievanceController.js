@@ -9,11 +9,18 @@ const nodemailer = require("nodemailer");
 //       pass: process.env.AUTH_PASS,
 //     },
 //   });
+const transporter = nodemailer.createTransport({
+    service:'Gmail',
+    auth:{
+        user:process.env.AUTH_EMAIL,
+        pass:process.env.AUTH_PASS
+    },
+});
 
 exports.getGrievance = async(req,res) =>{
     try{
         const grievances = await Grievance.find({})
-        console.log(grievances)
+        // console.log(grievances)
         res.status(200).json({status:true,grievances,msg: 'grievances'})
     }catch(err){
         return res.status(500).json({ status: false, msg: "Internal Server Error" });
@@ -35,21 +42,21 @@ exports.applyGrievance = async(req,res) =>{
             return countString;
         };
         const {email} = req.body.params
-        console.log(req.body);
+        // console.log(req.body);
         const formattedCount = await getCountWithLeadingZeros();
         await Grievance.create({...req.body.params,acknoledgementId:`SGRNO${formattedCount}`,status:'pending', grievanceResponseTime : null , grievanceReply : null})
-        // const mailOptions = {
-        //     from: process.env.AUTH_EMAIL,
-        //     to: email,
-        //     subject: "JNTUGV-Grievance",
-        //     html: `<p>Your Acknoledgement number is <b>${formattedCount}.You can Track your Grievance response using this</b></p>`,
-        // };
-        // transporter.sendMail(mailOptions, (err, info) => {
-        //     if (err) {
-        //       console.log("err", err);
-        //       console.log(info.messageId);
-        //     }
-        // });
+        const mailOptions = {
+            from: process.env.AUTH_EMAIL,
+            to: email,
+            subject: "JNTUGV-Grievance",
+            html: `<p>Your Acknoledgement number is <b>SGRNO${formattedCount} </b>.You can Track your Grievance response using this Acknoledgement Number</p>`,
+        };
+        transporter.sendMail(mailOptions, (err, info) => {
+            if (err) {
+              console.log("err", err);
+              console.log(info.messageId);
+            }
+        });
         res.status(200).json({status:true,msg:"Grievance added successfully",acknoledgementId: `SGRNO${formattedCount}`})
     } catch (err) {
         console.log(err)

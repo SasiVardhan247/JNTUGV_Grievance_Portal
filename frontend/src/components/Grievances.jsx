@@ -37,7 +37,7 @@ const Grievances = () => {
     }      
     return (
         <div className='container mt-5 mb-5'>
-            <p className='text-center fs-5 fw-bold'>Grivances</p>
+            <p className='text-center fs-5 fw-bold'>Grievances</p>
             {grievance && 
             <div className="card text-center">
                 <div className="card-header d-flex justify-content-center align-items-center">

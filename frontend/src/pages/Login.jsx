@@ -45,8 +45,8 @@ const Login = () => {
         { params }
       );
       setLoading(false);
-      localStorage.setItem("status", response.data.status);
-      setStatus(localStorage.getItem("status"));
+      // localStorage.setItem("status", response.data.status);
+      
       toast.success(response.data.msg, {
         position: "top-right",
         autoClose: 1000,
@@ -57,6 +57,7 @@ const Login = () => {
         progress: 0,
         theme: "colored",
       });
+      setStatus(response.data.status);
       // setPassword("")
       // setTimeout(() => {
       //   navigate("/login");
@@ -73,8 +74,9 @@ const Login = () => {
         progress: 0,
         theme: "colored",
       });
-      localStorage.setItem("status", err.response.data.status);
-      setStatus(localStorage.getItem("status"));
+      // localStorage.setItem("status", err.response.data.status);
+      console.log(err.response.data.status)
+      setStatus(err.response.data.status);
       setPassword("");
       navigate("/login");
     }
@@ -92,7 +94,8 @@ const Login = () => {
       );
       // setLoading(false);
       setStatus(false)
-      localStorage.setItem("r_token", response.data.token);
+      await localStorage.setItem("r_token", response.data.token);
+      setOtp("");
       toast.success(response.data.msg, {
         position: "top-right",
         autoClose: 1000,
@@ -103,13 +106,13 @@ const Login = () => {
         progress: 0,
         theme: "colored",
       });
-      setOtp("")
       setTimeout(() => {
         navigate("/");
       }, 1500);
     } catch (err) {
       // setLoading(false);
-      setStatus(false)
+      console.error(err);
+      // setStatus(false)
       toast.error(err.response.data.msg, {
         position: "top-right",
         autoClose: 5000,
@@ -207,7 +210,7 @@ const Login = () => {
           )}
         </form>
         {status && (
-          <form onSubmit={handleotp}>
+          <form>
               <div className="container-fluid" style={{
                 display: "flex",
                 justifyContent: "center",
@@ -291,12 +294,18 @@ const Login = () => {
                 alignItems: "center",
               }}
             >
-              <button className="btn btn-primary">Verify OTP</button>
+              <button className="btn btn-primary" onClick={(e) => {
+                e.preventDefault()
+                handleotp();
+              }} >Verify OTP</button>
             </div>
 
             <div className="container-fluid my-4 text-center">
               <p className="fs-6">Didn't receive any OTP?</p>
-              <button className="btn btn-primary" onClick={login}>
+              <button className="btn btn-primary" onClick={(e) => {
+                e.preventDefault()
+                login();
+              }}>
                 Resend
               </button>
             </div>

@@ -7,41 +7,43 @@ import 'react-toastify/dist/ReactToastify.css';
 import Footer from '../components/Footer';
 
 const GrievanceForm = () => {
-    const [memberId, setMid] = useState("");
+    const [applicationNumber, setMid] = useState("");
     const [fullName, setFN] = useState("");
     const [email, setEmail] = useState("");
     const [phoneNumber, setPN] = useState("");
     const [aadharNumber, setAN] = useState("");
     const [grievance, setGrivance] = useState("");
-    const [title, setTitle] = useState("");
+    // const [title, setTitle] = useState("");
     const [supportingDocs, setSD] = useState("");
+    const [grievanceNotification, setGN] = useState("1");
     const [grievanceCategory, setGC] = useState("1");
     const navigate = useNavigate();
     const [isLoading , setLoading] = useState(false);
 
     const checksum = function () {
-        if (memberId !== "" && fullName !== "" && email !== "" && phoneNumber !== "" && aadharNumber !== "" && grievance !== "" && title !== "" && supportingDocs !== "" && grievanceCategory !== "") {
+        if (applicationNumber !== "" && fullName !== "" && email !== "" && phoneNumber !== "" && aadharNumber !== "" && grievance !== "" && grievanceNotification !== "" && supportingDocs !== "" && grievanceCategory !== "") {
             return true
         }
         return false;
     }
     
-    const login = async () => {
+    const sendGrievance = async () => {
         setLoading(true);
         const params = {
-            memberId,
+            applicationNumber,
             fullName,
             email,
             phoneNumber,
             aadharNumber,
             grievance, 
-            title,
+            grievanceNotification,
             supportingDocs,
             grievanceCategory
         }
-        const response = await axios.post(`${process.env.REACT_APP_API_URL}/api/grievance/applyGrievance`, { params });
-        setLoading(false);
-        if (response.data.status) {
+        console.log(params)
+        try {
+            const response = await axios.post(`${process.env.REACT_APP_API_URL}/api/grievance/applyGrievance`,params);
+            setLoading(false);
             toast.success(`Grieviance Successfully submitted! Your Acknowledgment No is ${response.data.acknoledgementId}. Please take a note of it or take a screen shot`, {
                 position: "top-right",
                 autoClose: 60000,
@@ -58,12 +60,13 @@ const GrievanceForm = () => {
             setPN("");
             setAN("");
             setGrivance("");
-            setTitle("");
+            setGN("1");
             setSD("");
             setGC("1");
         }
-        else {
-            toast.error("Server error! Try again after some time", {
+        catch(err) {
+            setLoading(false);
+            toast.error(err.response.data.msg, {
                 position: "top-right",
                 autoClose: 5000,
                 hideProgressBar: false,
@@ -88,12 +91,20 @@ const GrievanceForm = () => {
             <div className={`container mt-2 col-lg-6 col-sm-12`}>
                 <form>
                     <div className="input-group mb-3">
-                        <span className="input-group-text" id="basic-addon1"><span className='required'>*</span>Faculty Id</span>
-                        <input type="text" className="form-control" placeholder="" aria-label="Username" value={memberId} onChange={(e) => setMid(e.target.value)} aria-describedby="basic-addon1" required={true} />
+                        <span className="input-group-text" id="basic-addon1"><span className='required'>*</span>Application Number</span>
+                        <input type="text" className="form-control" placeholder="" aria-label="Username" value={applicationNumber} onChange={(e) => setMid(e.target.value)} aria-describedby="basic-addon1" required={true} />
                     </div>
-                    <div className="input-group mb-3">
+                    {/* <div className="input-group mb-3">
                         <span className="input-group-text" id="basic-addon1"><span className='required'>*</span>Title</span>
                         <input type="text" className="form-control" placeholder="" aria-label="Username" value={title} onChange={(e) => setTitle(e.target.value)} aria-describedby="basic-addon1" required={true} />
+                    </div> */}
+                    <div>
+                        <label htmlFor="" className='form-label'>Select Category of Notification</label>
+                        <select class="form-select mb-3" aria-label="Default select example" value={grievanceNotification} onChange={(e) => setGN(e.target.value)}>
+                            <option value="1">Sample Notification 1</option>
+                            <option value="2">Sample Notification 2</option>
+                            <option value="3">Sample Notification 3</option>
+                        </select>
                     </div>
                     <div>
                         <label htmlFor="" className='form-label'>Select Category of Grievance</label>
@@ -102,7 +113,6 @@ const GrievanceForm = () => {
                             <option value="2">Sample cat 2</option>
                             <option value="3">Sample cat 3</option>
                         </select>
-
                     </div>
                     <div className="input-group mb-3">
                         <span className="input-group-text" id="basic-addon1"><span className='required'>*</span>Full Name</span>
@@ -110,7 +120,7 @@ const GrievanceForm = () => {
                     </div>
                     <div className="input-group mb-3">
                         <span className="input-group-text" id="basic-addon1"><span className='required'>*</span>Mail address</span>
-                        <input type="mail" className="form-control" placeholder="" aria-label="Username" value={email} onChange={(e) => setEmail(e.target.value)} aria-describedby="basic-addon1" required={true} />
+                        <input type="email" className="form-control" placeholder="" aria-label="Username" value={email} onChange={(e) => setEmail(e.target.value)} aria-describedby="basic-addon1" required={true} />
                     </div>
                     <div className="input-group mb-3">
                         <span className="input-group-text" id="basic-addon1"><span className='required'>*</span>Aadhar Number</span>
@@ -137,7 +147,7 @@ const GrievanceForm = () => {
                         <button type="submit" class={`btn btn-primary ${isLoading || (!checksum() && "disabled")}`} onClick={(e) => {
                             e.preventDefault()
                             if (checksum()) {
-                                login();
+                                sendGrievance();
                             }
                             else {
                                 toast.error("Please enter all fields", {

@@ -143,8 +143,8 @@ const Remarks = () => {
                 </div>
                 <form>
                     <div className="input-group mb-3">
-                        <span className="input-group-text" id="basic-addon1">Faculty Id</span>
-                        <input type="text" className="form-control" placeholder="" aria-label="Username" value={grievance.memberId} aria-describedby="basic-addon1" required={true} disabled />
+                        <span className="input-group-text" id="basic-addon1">Application Number</span>
+                        <input type="text" className="form-control" placeholder="" aria-label="Username" value={grievance.applicationNumber} aria-describedby="basic-addon1" required={true} disabled />
                     </div>
                     <div className="input-group mb-3">
                         <span className="input-group-text" id="basic-addon1">Full Name</span>
@@ -164,8 +164,8 @@ const Remarks = () => {
                         <input type="text" className="form-control" required={true} value={grievance.phoneNumber} disabled />
                     </div>
                     <div className="input-group mb-3">
-                        <span className="input-group-text" id="basic-addon1">Title</span>
-                        <input type="text" className="form-control" placeholder="" aria-label="Username" value={grievance.title} aria-describedby="basic-addon1" required={true} disabled />
+                        <span className="input-group-text" id="basic-addon1">Notification Number</span>
+                        <input type="text" className="form-control" placeholder="" aria-label="Username" value={grievance.grievanceNotification} aria-describedby="basic-addon1" required={true} disabled />
                     </div>
                     <div className="input-group mb-3">
                         <span className="input-group-text" id="basic-addon1">Category</span>

@@ -41,26 +41,26 @@ exports.applyGrievance = async(req,res) =>{
             const countString = pad(incrementedCount, 5);
             return countString;
         };
-        const {email} = req.body.params
-        // console.log(req.body);
+        const {email} = req.body
+        console.log(req.body);
         const formattedCount = await getCountWithLeadingZeros();
-        await Grievance.create({...req.body.params,acknoledgementId:`SGRNO${formattedCount}`,status:'pending', grievanceResponseTime : null , grievanceReply : null})
+        await Grievance.create({...req.body,acknoledgementId:`SGRNO${formattedCount}`,status:'pending', grievanceResponseTime : null , grievanceReply : null})
         const mailOptions = {
             from: process.env.AUTH_EMAIL,
             to: email,
             subject: "JNTUGV-Grievance",
             html: `<p>Your Acknoledgement number is <b>SGRNO${formattedCount} </b>.You can Track your Grievance response using this Acknoledgement Number</p>`,
         };
-        transporter.sendMail(mailOptions, (err, info) => {
-            if (err) {
-              console.log("err", err);
-              console.log(info.messageId);
-            }
-        });
+        // transporter.sendMail(mailOptions, (err, info) => {
+        //     if (err) {
+        //       console.log("err", err);
+        //       console.log(info.messageId);
+        //     }
+        // });
         res.status(200).json({status:true,msg:"Grievance added successfully",acknoledgementId: `SGRNO${formattedCount}`})
     } catch (err) {
-        console.log(err)
-        return res.status(200).json({ status: false, msg: "Internal Server Error" });
+        console.log("err",err)
+        return res.status(500).json({ status: false, msg: "Internal Server Error" });
     }
 };
 
@@ -72,7 +72,7 @@ exports.updateGrievance = async(req,res) =>{
         await Grievance.findByIdAndUpdate(id,{...req.query,grievanceResponseTime:currentTime}).catch((err) => console.log(err))
         res.status(200).json({status:true,msg:"Grievance Updated successfully"})
     }catch(err){
-        return res.status(200).json({ status: false, msg: "Internal Server Error" });
+        return res.status(500).json({ status: false, msg: "Internal Server Error" });
     }
 };
 
@@ -80,9 +80,14 @@ exports.checkStatus = async(req,res) =>{
     try{
         const {acknoledgementId} = req.body.params
         const grievance = await Grievance.findOne({acknoledgementId}).exec();
-        res.status(200).json({search_status:true,msg:"status sent",grievance})
+        if (grievance){
+            res.status(200).json({search_status:true,msg:"Fetched Sucessfully",grievance})
+        }
+        else{
+            res.status(400).json({search_status:false,msg:"No Record Found"})
+        }
     }catch(err){
-        return res.status(200).json({ search_status: false, msg: "Internal Server Error" });
+        return res.status(500).json({ search_status: false, msg: "Internal Server Error" });
     }
 }
 
@@ -99,7 +104,7 @@ exports.fetchGrievance = async (req,res) => {
         })
     }
     catch(err) {
-        return res.status(200).json({
+        return res.status(500).json({
             status : false,
             msg : "Not found"
         })

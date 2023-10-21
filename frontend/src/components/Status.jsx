@@ -1,6 +1,7 @@
 import React from 'react'
 
 const Status = (props) => {
+    console.log(props)
     return (
         <div className='container mt-4 mb-4 bg-white col-lg-4 border rounded p-3 '>
             <div className='container d-flex justify-content-center align-items-center'>

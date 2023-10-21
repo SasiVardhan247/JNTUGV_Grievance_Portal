@@ -1,9 +1,8 @@
-const mongoose = require("mongoose");
 const { Schema, model } = require("mongoose");
 
 const grievanceModel = new Schema(
     {
-        memberId :{
+        applicationNumber :{
             type : String,
             required:true,
         },
@@ -17,7 +16,7 @@ const grievanceModel = new Schema(
         },
         email :{
             type: String,
-            require:true,
+            required:true,
         },
         phoneNumber: {
             type: String,
@@ -45,7 +44,7 @@ const grievanceModel = new Schema(
         grievanceReply :{
             type: String,
         },
-        title :{
+        grievanceNotification :{
             type: String,
             required:true,
         },
@@ -56,7 +55,7 @@ const grievanceModel = new Schema(
             type:String,
         },
     },
-    { timestamp: true }
+    { timestamps: true }
 );
 
 const grievances = new model("grievances",grievanceModel);

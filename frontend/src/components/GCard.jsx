@@ -5,6 +5,8 @@ const GCard = (props) => {
     const navigate = useNavigate();
     const parseDate = function (dateString) {
         const date = new Date(dateString);
+        date.setUTCHours(date.getUTCHours() + 5);
+        date.setUTCMinutes(date.getUTCMinutes() + 30);
         const day = date.getUTCDate();
         const month = date.getUTCMonth() + 1; // Months are zero-based
         const year = date.getUTCFullYear();
@@ -29,7 +31,7 @@ const GCard = (props) => {
             <div className='row'>
                 <div className='col-lg-6 col-sm-12 text-sm-start'> <small className='text-black  text-opacity-50'>Posted on {parseDate(props.grievancePostingTime)}</small> </div>
                 {
-                    (props.status == "approved" || props.status == "rejected") && <div className='col-lg-6 col-sm-12 text-lg-end text-sm-start'><small className='text-black  text-opacity-50'>{props.grievanceResponseTime && "Replied on " + props.grievanceResponseTime} </small> </div>
+                    (props.status == "approved" || props.status == "rejected") && <div className='col-lg-6 col-sm-12 text-lg-end text-sm-start'><small className='text-black  text-opacity-50'>{props.grievanceResponseTime && "Replied on " + parseDate(props.grievancePostingTime)} </small> </div>
                 }
             </div>
             {

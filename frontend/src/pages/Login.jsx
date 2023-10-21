@@ -18,7 +18,6 @@ const Login = () => {
     }
     return false;
   };
-
   const handleChange = (e) => {
     const { value, id } = e.target;
     const nextInput = parseInt(id.substring(3)) + 1;
@@ -46,7 +45,7 @@ const Login = () => {
       );
       setLoading(false);
       // localStorage.setItem("status", response.data.status);
-      
+
       toast.success(response.data.msg, {
         position: "top-right",
         autoClose: 1000,
@@ -75,14 +74,14 @@ const Login = () => {
         theme: "colored",
       });
       // localStorage.setItem("status", err.response.data.status);
-      console.log(err.response.data.status)
+      console.log(err.response.data.status);
       setStatus(err.response.data.status);
       setPassword("");
       navigate("/login");
     }
   };
-  
-  const handleotp = async () =>{
+
+  const handleotp = async () => {
     const finalOtp = Object.values(otp).join("");
     const params = {
       finalOtp,
@@ -93,7 +92,7 @@ const Login = () => {
         { params }
       );
       // setLoading(false);
-      setStatus(false)
+      setStatus(false);
       await localStorage.setItem("r_token", response.data.token);
       setOtp("");
       toast.success(response.data.msg, {
@@ -128,7 +127,7 @@ const Login = () => {
         navigate("/login");
       }, 1500);
     }
-  }
+  };
 
   return (
     <div>
@@ -211,11 +210,14 @@ const Login = () => {
         </form>
         {status && (
           <form>
-              <div className="container-fluid" style={{
+            <div
+              className="container-fluid"
+              style={{
                 display: "flex",
                 justifyContent: "center",
                 alignItems: "center",
-              }}>
+              }}
+            >
               <small>
                 {" "}
                 <i className="fa-solid fa-check mx-1 text-success"></i>OTP sent
@@ -285,7 +287,7 @@ const Login = () => {
                 onChange={handleChange}
               />
             </div>
-           
+
             <div
               className="container-fluid my-4"
               style={{
@@ -294,18 +296,26 @@ const Login = () => {
                 alignItems: "center",
               }}
             >
-              <button className="btn btn-primary" onClick={(e) => {
-                e.preventDefault()
-                handleotp();
-              }} >Verify OTP</button>
+              <button
+                className="btn btn-primary"
+                onClick={(e) => {
+                  e.preventDefault();
+                  handleotp();
+                }}
+              >
+                Verify OTP
+              </button>
             </div>
 
             <div className="container-fluid my-4 text-center">
               <p className="fs-6">Didn't receive any OTP?</p>
-              <button className="btn btn-primary" onClick={(e) => {
-                e.preventDefault()
-                login();
-              }}>
+              <button
+                className="btn btn-primary"
+                onClick={(e) => {
+                  e.preventDefault();
+                  login();
+                }}
+              >
                 Resend
               </button>
             </div>

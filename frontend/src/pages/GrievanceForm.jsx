@@ -63,6 +63,9 @@ const GrievanceForm = () => {
             setGN("1");
             setSD("");
             setGC("1");
+            setTimeout(() => {
+                navigate('/')
+            }, 1500);
         }
         catch(err) {
             setLoading(false);

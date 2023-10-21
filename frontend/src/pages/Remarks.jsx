@@ -12,10 +12,10 @@ const Remarks = () => {
     const { id } = useParams();
     const [status, setStatus] = useState("approved");
     const [grievanceReply, setGR] = useState("");
-    const r_token = localStorage.getItem('r_token');
+    // const r_token = localStorage.getItem('r_token');
     const [grievance, setGrievance] = useState({});
     const [isLoading, setLoading] = useState(false);
-    const [pageLoading, setpLoading] = useState(false);
+    // const [pageLoading, setpLoading] = useState(false);
 
     const checksum = function () {
         if (grievanceReply !== "") {
@@ -27,7 +27,7 @@ const Remarks = () => {
     useEffect(() => {
         const fetchGrievace = async () => {
             try {
-                setpLoading(true)
+                // setpLoading(true)
                 const response = await axios.get(`${process.env.REACT_APP_API_URL}/api/grievance/fetchGrievance`, {
                     headers: {
                         id: id,
@@ -36,7 +36,7 @@ const Remarks = () => {
                 });
                 if (response.data.status) {
                     setGrievance(response.data.grievance);
-                    setpLoading(false)
+                    // setpLoading(false)
                 }
                 else {
                     toast.error(`Internal Server Error!`, {
@@ -66,7 +66,7 @@ const Remarks = () => {
         }
         fetchGrievace()
 
-    }, [])
+    }, [id])
 
     const sendRemarks = async () => {
         const params = {

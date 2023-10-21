@@ -31,11 +31,11 @@ const GCard = (props) => {
             <div className='row'>
                 <div className='col-lg-6 col-sm-12 text-sm-start'> <small className='text-black  text-opacity-50'>Posted on {parseDate(props.grievancePostingTime)}</small> </div>
                 {
-                    (props.status == "approved" || props.status == "rejected") && <div className='col-lg-6 col-sm-12 text-lg-end text-sm-start'><small className='text-black  text-opacity-50'>{props.grievanceResponseTime && "Replied on " + parseDate(props.grievancePostingTime)} </small> </div>
+                    (props.status === "approved" || props.status === "rejected") && <div className='col-lg-6 col-sm-12 text-lg-end text-sm-start'><small className='text-black  text-opacity-50'>{props.grievanceResponseTime && "Replied on " + parseDate(props.grievancePostingTime)} </small> </div>
                 }
             </div>
             {
-                props.status == "pending" && <div className='row mt-1'>
+                props.status === "pending" && <div className='row mt-1'>
                     <div className='col-sm-6'>
                         <button className='btn btn-primary btn-sm' type='button' onClick={(e) => {
                             e.preventDefault();
@@ -47,7 +47,7 @@ const GCard = (props) => {
                 </div>
             }
             {
-                (props.status == "approved" || props.status === "rejected") && <div>
+                (props.status === "approved" || props.status === "rejected") && <div>
                     <div>
                         <small className='fw-bold'>Your Response</small><br />
                         <small className=''>{props.grievanceReply}</small>
